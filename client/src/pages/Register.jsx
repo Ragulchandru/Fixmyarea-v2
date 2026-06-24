@@ -10,6 +10,8 @@ const Register = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
+  const [emailReadOnly, setEmailReadOnly] = useState(true);
+  const [passwordReadOnly, setPasswordReadOnly] = useState(true);
   const [errorMsg, setErrorMsg] = useState('');
   const [submitting, setSubmitting] = useState(false);
 
@@ -74,7 +76,7 @@ const Register = () => {
           </div>
         )}
 
-        <form className="mt-8 space-y-4" onSubmit={handleSubmit}>
+        <form className="mt-8 space-y-4" onSubmit={handleSubmit} autoComplete="off">
           {/* Full Name input */}
           <div>
             <label className="text-xs font-semibold text-slate-600 dark:text-slate-400 block mb-1.5 pl-1">
@@ -90,6 +92,7 @@ const Register = () => {
                 value={name}
                 onChange={(e) => setName(e.target.value)}
                 placeholder="Ramanathan K"
+                autoComplete="name"
                 className="w-full bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl py-2.5 pl-10 pr-4 text-sm text-slate-900 dark:text-white"
               />
             </div>
@@ -110,6 +113,9 @@ const Register = () => {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder="citizen@gmail.com"
+                autoComplete="off"
+                readOnly={emailReadOnly}
+                onFocus={() => setEmailReadOnly(false)}
                 className="w-full bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl py-2.5 pl-10 pr-4 text-sm text-slate-900 dark:text-white"
               />
             </div>
@@ -130,6 +136,9 @@ const Register = () => {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 placeholder="••••••••"
+                autoComplete="new-password"
+                readOnly={passwordReadOnly}
+                onFocus={() => setPasswordReadOnly(false)}
                 className="w-full bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl py-2.5 pl-10 pr-4 text-sm text-slate-900 dark:text-white"
               />
             </div>
@@ -150,6 +159,9 @@ const Register = () => {
                 value={confirmPassword}
                 onChange={(e) => setConfirmPassword(e.target.value)}
                 placeholder="••••••••"
+                autoComplete="new-password"
+                readOnly={passwordReadOnly}
+                onFocus={() => setPasswordReadOnly(false)}
                 className="w-full bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl py-2.5 pl-10 pr-4 text-sm text-slate-900 dark:text-white"
               />
             </div>

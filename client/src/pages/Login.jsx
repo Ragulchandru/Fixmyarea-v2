@@ -8,6 +8,8 @@ const Login = () => {
   const navigate = useNavigate();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [emailReadOnly, setEmailReadOnly] = useState(true);
+  const [passwordReadOnly, setPasswordReadOnly] = useState(true);
   const [errorMsg, setErrorMsg] = useState('');
   const [submitting, setSubmitting] = useState(false);
 
@@ -60,7 +62,7 @@ const Login = () => {
           </div>
         )}
 
-        <form className="mt-8 space-y-5" onSubmit={handleSubmit}>
+        <form className="mt-8 space-y-5" onSubmit={handleSubmit} autoComplete="off">
           {/* Email input */}
           <div className="relative">
             <label className="text-xs font-semibold text-slate-600 dark:text-slate-400 block mb-1.5 pl-1">
@@ -76,6 +78,9 @@ const Login = () => {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder="citizen@fixmyarea.tn.gov.in"
+                autoComplete="off"
+                readOnly={emailReadOnly}
+                onFocus={() => setEmailReadOnly(false)}
                 className="w-full bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl py-2.5 pl-10 pr-4 text-sm text-slate-900 dark:text-white"
               />
             </div>
@@ -96,6 +101,9 @@ const Login = () => {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 placeholder="••••••••"
+                autoComplete="new-password"
+                readOnly={passwordReadOnly}
+                onFocus={() => setPasswordReadOnly(false)}
                 className="w-full bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl py-2.5 pl-10 pr-4 text-sm text-slate-900 dark:text-white"
               />
             </div>
@@ -129,16 +137,7 @@ const Login = () => {
           </p>
         </div>
 
-        {/* Quick Admin/Employee credentials reference to help user test */}
-        <div className="bg-slate-50 dark:bg-slate-950 p-4 rounded-2xl border border-slate-200/50 dark:border-slate-800/50 text-[10px] text-slate-500 dark:text-slate-400">
-          <div className="font-bold uppercase tracking-wider mb-2 text-slate-600 dark:text-slate-350">
-            Demo Portal Accounts:
-          </div>
-          <div className="space-y-1">
-            <div><span className="font-semibold text-slate-700 dark:text-slate-300">Admin:</span> admin@fixmyarea.tn.gov.in / Admin@123</div>
-            <p className="text-[9px] mt-1 leading-normal">Employees accounts can be provisioned inside the Admin Dashboard after logging in.</p>
-          </div>
-        </div>
+
       </div>
     </div>
   );
