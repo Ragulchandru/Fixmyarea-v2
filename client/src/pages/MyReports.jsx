@@ -27,7 +27,7 @@ const MyReports = () => {
     fetchMyReports();
   }, []);
 
-  const getStatusColor = (status) => {
+  const getStatusStyle = (status) => {
     switch (status) {
       case 'resolved': return 'bg-emerald-500/10 text-emerald-500 border border-emerald-500/30';
       case 'in_progress': return 'bg-amber-500/10 text-amber-500 border border-amber-500/30';
