@@ -56,7 +56,7 @@ const Navbar = ({ toggleDarkMode, isDarkMode }) => {
     { label: t('reportIssue'), path: '/report', icon: PlusCircle, show: true },
     { label: t('feed'), path: '/feed', icon: ListCollapse, show: true },
     { label: t('map'), path: '/map-view', icon: Map, show: true },
-    { label: t('myReports'), path: '/my-reports', icon: FileText, show: !!user && user.role === 'citizen' },
+    { label: t('myReports'), path: '/my-reports', icon: FileText, show: !!user },
     { label: t('notifications'), path: '/notifications', icon: Bell, show: !!user, badge: notificationsCount },
     { label: t('profile'), path: '/profile', icon: User, show: !!user },
     { label: t('admin'), path: '/admin-dashboard', icon: ShieldAlert, show: !!user && user.role === 'admin' },
