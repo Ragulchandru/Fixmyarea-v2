@@ -2,10 +2,26 @@ const mongoose = require('mongoose');
 
 const connectDB = async () => {
   try {
-    const conn = await mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost:27017/fixmyarea');
+    const dbUri = process.env.MONGODB_URI;
+    if (!dbUri) {
+      throw new Error('MONGODB_URI environment variable is not defined.');
+    }
+    const conn = await mongoose.connect(dbUri, {
+      serverSelectionTimeoutMS: 5000 // Fail fast (5s) to trigger fallback/error before query buffering times out (10s)
+    });
     console.log(`MongoDB Connected: ${conn.connection.host}`);
   } catch (error) {
     console.error(`MongoDB Connection Error: ${error.message}`);
+
+    // Disable in-memory fallback on Vercel / production environments
+    const isVercel = !!process.env.VERCEL;
+    const isProduction = process.env.NODE_ENV === 'production';
+
+    if (isVercel || isProduction) {
+      console.error('In-memory MongoDB fallback is disabled on Vercel/production.');
+      throw error;
+    }
+
     console.log('Attempting to launch an in-memory MongoDB fallback server...');
     try {
       const { MongoMemoryServer } = require('mongodb-memory-server');

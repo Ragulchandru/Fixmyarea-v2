@@ -13,7 +13,8 @@ import {
   ArrowLeft, 
   ArrowRight, 
   AlertTriangle,
-  EyeOff
+  EyeOff,
+  X
 } from 'lucide-react';
 
 const ReportIssue = () => {

@@ -6,7 +6,7 @@ const rateLimit = require('express-rate-limit');
 const dotenv = require('dotenv');
 
 // Load environment variables
-dotenv.config();
+dotenv.config({ path: path.join(__dirname, '../.env') });
 
 const connectDB = require('./config/db');
 const seedDatabase = require('./utils/seed');
@@ -16,6 +16,8 @@ const { checkMaintenance } = require('./middleware/auth');
 connectDB().then(() => {
   // Run Database Seeder
   seedDatabase();
+}).catch((err) => {
+  console.error('Failed to initialize database during startup:', err);
 });
 
 const app = express();
@@ -44,7 +46,9 @@ const apiLimiter = rateLimit({
 app.use('/api', apiLimiter);
 
 // Serve static uploads
-app.use('/uploads', express.static(path.join(__dirname, '../uploads')));
+const isVercel = !!process.env.VERCEL;
+const staticUploadsDir = isVercel ? '/tmp/uploads' : path.join(__dirname, '../uploads');
+app.use('/uploads', express.static(staticUploadsDir));
 
 // Maintenance mode checker - applied to all API endpoints
 app.use('/api', checkMaintenance);
