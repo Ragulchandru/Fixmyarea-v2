@@ -50,6 +50,19 @@ const isVercel = !!process.env.VERCEL;
 const staticUploadsDir = isVercel ? '/tmp/uploads' : path.join(__dirname, '../uploads');
 app.use('/uploads', express.static(staticUploadsDir));
 
+// Database connection status checker middleware - returns 503 early if DB is disconnected
+const mongoose = require('mongoose');
+app.use('/api', (req, res, next) => {
+  const state = mongoose.connection.readyState;
+  if (state === 0 || state === 3) {
+    return res.status(503).json({
+      success: false,
+      message: 'Database connection is not established. Please check your database connection configuration and IP whitelist settings.'
+    });
+  }
+  next();
+});
+
 // Maintenance mode checker - applied to all API endpoints
 app.use('/api', checkMaintenance);
 

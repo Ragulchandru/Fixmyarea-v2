@@ -1,5 +1,8 @@
 const mongoose = require('mongoose');
 
+// Increase query buffering timeout to 30s to allow time for in-memory MongoDB downloading/booting
+mongoose.set('bufferTimeoutMS', 30000);
+
 const connectDB = async () => {
   try {
     const dbUri = process.env.MONGODB_URI;
